@@ -7,4 +7,4 @@ Projeto Flutter
 Este projeto é apenas um treino prático sobre Arquitetura do tipo MVC (Model, View, Controller) e teste unitário
 
 
-Breve link do app...Aguarde!
+Link do apk: https://drive.google.com/file/d/1VHMUVTLqMQTipH4qaOfdhXRVXo8Vrxy_/view?usp=sharing
