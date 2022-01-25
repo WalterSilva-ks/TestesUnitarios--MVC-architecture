@@ -1,8 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:flutterando_02/app/componentes/currency_box.dart';
-import 'package:flutterando_02/app/models/currence_model.dart';
+import 'package:flutterando_02/app/controller/home_controller.dart';
 
 class HomeView extends StatefulWidget {
   @override
@@ -10,7 +10,17 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<String> moedas = <String>["Real", "Dólar", "Bitcoin", "Euro"];
+  final TextEditingController? toText = TextEditingController();
+  final TextEditingController? fromText = TextEditingController();
+
+  HomeController? homeController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    homeController = HomeController(toText: toText, fromText: fromText);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +50,26 @@ class _HomeViewState extends State<HomeView> {
               const SizedBox(
                 height: 20,
               ),
-              CurrencyBox(),
-              CurrencyBox(),
+              CurrencyBox(
+                selectedItem: homeController!.toCurrency,
+                controller: toText,
+                items: homeController!.currencies,
+                onChanged: (model) {
+                  setState(() {
+                    homeController!.toCurrency = model;
+                  });
+                },
+              ),
+              CurrencyBox(
+                selectedItem: homeController!.fromCurrency,
+                controller: fromText,
+                items: homeController!.currencies,
+                onChanged: (model) {
+                  setState(() {
+                    homeController!.fromCurrency = model;
+                  });
+                },
+              ),
               const SizedBox(
                 height: 50,
               ),
@@ -55,7 +83,9 @@ class _HomeViewState extends State<HomeView> {
                     borderRadius: BorderRadius.circular(50),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  homeController!.convert();
+                },
                 child: const Text(
                   "Converter",
                   style: TextStyle(
